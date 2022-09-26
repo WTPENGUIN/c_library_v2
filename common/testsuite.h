@@ -7982,6 +7982,371 @@ static void mavlink_test_mag_cal_report(uint8_t system_id, uint8_t component_id,
 #endif
 }
 
+static void mavlink_test_kcmvp_set_encrypt(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_KCMVP_SET_ENCRYPT >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_kcmvp_set_encrypt_t packet_in = {
+        5,72
+    };
+    mavlink_kcmvp_set_encrypt_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.algorithm_type = packet_in.algorithm_type;
+        packet1.key_index = packet_in.key_index;
+        
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_KCMVP_SET_ENCRYPT_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_KCMVP_SET_ENCRYPT_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_set_encrypt_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_kcmvp_set_encrypt_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_set_encrypt_pack(system_id, component_id, &msg , packet1.algorithm_type , packet1.key_index );
+    mavlink_msg_kcmvp_set_encrypt_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_set_encrypt_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.algorithm_type , packet1.key_index );
+    mavlink_msg_kcmvp_set_encrypt_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_kcmvp_set_encrypt_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_set_encrypt_send(MAVLINK_COMM_1 , packet1.algorithm_type , packet1.key_index );
+    mavlink_msg_kcmvp_set_encrypt_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("KCMVP_SET_ENCRYPT") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_KCMVP_SET_ENCRYPT) != NULL);
+#endif
+}
+
+static void mavlink_test_kcmvp_encrypt_mode_on_off(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_KCMVP_ENCRYPT_MODE_ON_OFF >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_kcmvp_encrypt_mode_on_off_t packet_in = {
+        5,72
+    };
+    mavlink_kcmvp_encrypt_mode_on_off_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.kcmvp_encrypt_mode_on = packet_in.kcmvp_encrypt_mode_on;
+        packet1.kcmvp_encrypt_mode_off = packet_in.kcmvp_encrypt_mode_off;
+        
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_KCMVP_ENCRYPT_MODE_ON_OFF_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_KCMVP_ENCRYPT_MODE_ON_OFF_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypt_mode_on_off_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_kcmvp_encrypt_mode_on_off_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypt_mode_on_off_pack(system_id, component_id, &msg , packet1.kcmvp_encrypt_mode_on , packet1.kcmvp_encrypt_mode_off );
+    mavlink_msg_kcmvp_encrypt_mode_on_off_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypt_mode_on_off_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.kcmvp_encrypt_mode_on , packet1.kcmvp_encrypt_mode_off );
+    mavlink_msg_kcmvp_encrypt_mode_on_off_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_kcmvp_encrypt_mode_on_off_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypt_mode_on_off_send(MAVLINK_COMM_1 , packet1.kcmvp_encrypt_mode_on , packet1.kcmvp_encrypt_mode_off );
+    mavlink_msg_kcmvp_encrypt_mode_on_off_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("KCMVP_ENCRYPT_MODE_ON_OFF") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_KCMVP_ENCRYPT_MODE_ON_OFF) != NULL);
+#endif
+}
+
+static void mavlink_test_kcmvp_encrypted_mission_item(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_KCMVP_ENCRYPTED_MISSION_ITEM >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_kcmvp_encrypted_mission_item_t packet_in = {
+        5,72,{ 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178 },{ 3, 4, 5, 6, 7, 8, 9, 10, 11, 12, 13, 14, 15, 16, 17, 18 }
+    };
+    mavlink_kcmvp_encrypted_mission_item_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.sysid = packet_in.sysid;
+        packet1.compid = packet_in.compid;
+        
+        mav_array_memcpy(packet1.encrypted_mission, packet_in.encrypted_mission, sizeof(uint8_t)*40);
+        mav_array_memcpy(packet1.counter_array, packet_in.counter_array, sizeof(uint8_t)*16);
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_KCMVP_ENCRYPTED_MISSION_ITEM_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_KCMVP_ENCRYPTED_MISSION_ITEM_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_mission_item_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_kcmvp_encrypted_mission_item_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_mission_item_pack(system_id, component_id, &msg , packet1.sysid , packet1.compid , packet1.encrypted_mission , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_mission_item_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_mission_item_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.sysid , packet1.compid , packet1.encrypted_mission , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_mission_item_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_kcmvp_encrypted_mission_item_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_mission_item_send(MAVLINK_COMM_1 , packet1.sysid , packet1.compid , packet1.encrypted_mission , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_mission_item_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("KCMVP_ENCRYPTED_MISSION_ITEM") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_KCMVP_ENCRYPTED_MISSION_ITEM) != NULL);
+#endif
+}
+
+static void mavlink_test_kcmvp_encrypted_global_position(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GLOBAL_POSITION >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_kcmvp_encrypted_global_position_t packet_in = {
+        5,72,{ 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166 },{ 223, 224, 225, 226, 227, 228, 229, 230, 231, 232, 233, 234, 235, 236, 237, 238 }
+    };
+    mavlink_kcmvp_encrypted_global_position_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.sysid = packet_in.sysid;
+        packet1.compid = packet_in.compid;
+        
+        mav_array_memcpy(packet1.encrypted_position, packet_in.encrypted_position, sizeof(uint8_t)*28);
+        mav_array_memcpy(packet1.counter_array, packet_in.counter_array, sizeof(uint8_t)*16);
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GLOBAL_POSITION_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GLOBAL_POSITION_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_global_position_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_kcmvp_encrypted_global_position_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_global_position_pack(system_id, component_id, &msg , packet1.sysid , packet1.compid , packet1.encrypted_position , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_global_position_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_global_position_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.sysid , packet1.compid , packet1.encrypted_position , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_global_position_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_kcmvp_encrypted_global_position_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_global_position_send(MAVLINK_COMM_1 , packet1.sysid , packet1.compid , packet1.encrypted_position , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_global_position_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("KCMVP_ENCRYPTED_GLOBAL_POSITION") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GLOBAL_POSITION) != NULL);
+#endif
+}
+
+static void mavlink_test_kcmvp_encrypted_gps_raw(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GPS_RAW >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_kcmvp_encrypted_gps_raw_t packet_in = {
+        5,72,{ 139, 140, 141, 142, 143, 144, 145, 146, 147, 148, 149, 150, 151, 152, 153, 154, 155, 156, 157, 158, 159, 160, 161, 162, 163, 164, 165, 166, 167, 168, 169, 170, 171, 172, 173, 174, 175, 176, 177, 178, 179, 180, 181, 182, 183, 184, 185, 186, 187, 188, 189, 190 },{ 39, 40, 41, 42, 43, 44, 45, 46, 47, 48, 49, 50, 51, 52, 53, 54 }
+    };
+    mavlink_kcmvp_encrypted_gps_raw_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.sysid = packet_in.sysid;
+        packet1.compid = packet_in.compid;
+        
+        mav_array_memcpy(packet1.encrypted_position, packet_in.encrypted_position, sizeof(uint8_t)*52);
+        mav_array_memcpy(packet1.counter_array, packet_in.counter_array, sizeof(uint8_t)*16);
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GPS_RAW_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GPS_RAW_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_gps_raw_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_kcmvp_encrypted_gps_raw_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_gps_raw_pack(system_id, component_id, &msg , packet1.sysid , packet1.compid , packet1.encrypted_position , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_gps_raw_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_gps_raw_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.sysid , packet1.compid , packet1.encrypted_position , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_gps_raw_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_kcmvp_encrypted_gps_raw_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_encrypted_gps_raw_send(MAVLINK_COMM_1 , packet1.sysid , packet1.compid , packet1.encrypted_position , packet1.counter_array );
+    mavlink_msg_kcmvp_encrypted_gps_raw_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("KCMVP_ENCRYPTED_GPS_RAW") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_KCMVP_ENCRYPTED_GPS_RAW) != NULL);
+#endif
+}
+
+static void mavlink_test_kcmvp_cmd_ack(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
+{
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+    mavlink_status_t *status = mavlink_get_channel_status(MAVLINK_COMM_0);
+        if ((status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) && MAVLINK_MSG_ID_KCMVP_CMD_ACK >= 256) {
+            return;
+        }
+#endif
+    mavlink_message_t msg;
+        uint8_t buffer[MAVLINK_MAX_PACKET_LEN];
+        uint16_t i;
+    mavlink_kcmvp_cmd_ack_t packet_in = {
+        5
+    };
+    mavlink_kcmvp_cmd_ack_t packet1, packet2;
+        memset(&packet1, 0, sizeof(packet1));
+        packet1.ack_result = packet_in.ack_result;
+        
+        
+#ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
+        if (status->flags & MAVLINK_STATUS_FLAG_OUT_MAVLINK1) {
+           // cope with extensions
+           memset(MAVLINK_MSG_ID_KCMVP_CMD_ACK_MIN_LEN + (char *)&packet1, 0, sizeof(packet1)-MAVLINK_MSG_ID_KCMVP_CMD_ACK_MIN_LEN);
+        }
+#endif
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_cmd_ack_encode(system_id, component_id, &msg, &packet1);
+    mavlink_msg_kcmvp_cmd_ack_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_cmd_ack_pack(system_id, component_id, &msg , packet1.ack_result );
+    mavlink_msg_kcmvp_cmd_ack_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_cmd_ack_pack_chan(system_id, component_id, MAVLINK_COMM_0, &msg , packet1.ack_result );
+    mavlink_msg_kcmvp_cmd_ack_decode(&msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+        memset(&packet2, 0, sizeof(packet2));
+        mavlink_msg_to_send_buffer(buffer, &msg);
+        for (i=0; i<mavlink_msg_get_send_buffer_length(&msg); i++) {
+            comm_send_ch(MAVLINK_COMM_0, buffer[i]);
+        }
+    mavlink_msg_kcmvp_cmd_ack_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+        
+        memset(&packet2, 0, sizeof(packet2));
+    mavlink_msg_kcmvp_cmd_ack_send(MAVLINK_COMM_1 , packet1.ack_result );
+    mavlink_msg_kcmvp_cmd_ack_decode(last_msg, &packet2);
+        MAVLINK_ASSERT(memcmp(&packet1, &packet2, sizeof(packet1)) == 0);
+
+#ifdef MAVLINK_HAVE_GET_MESSAGE_INFO
+    MAVLINK_ASSERT(mavlink_get_message_info_by_name("KCMVP_CMD_ACK") != NULL);
+    MAVLINK_ASSERT(mavlink_get_message_info_by_id(MAVLINK_MSG_ID_KCMVP_CMD_ACK) != NULL);
+#endif
+}
+
 static void mavlink_test_efi_status(uint8_t system_id, uint8_t component_id, mavlink_message_t *last_msg)
 {
 #ifdef MAVLINK_STATUS_FLAG_OUT_MAVLINK1
@@ -14625,6 +14990,12 @@ static void mavlink_test_common(uint8_t system_id, uint8_t component_id, mavlink
     mavlink_test_landing_target(system_id, component_id, last_msg);
     mavlink_test_fence_status(system_id, component_id, last_msg);
     mavlink_test_mag_cal_report(system_id, component_id, last_msg);
+    mavlink_test_kcmvp_set_encrypt(system_id, component_id, last_msg);
+    mavlink_test_kcmvp_encrypt_mode_on_off(system_id, component_id, last_msg);
+    mavlink_test_kcmvp_encrypted_mission_item(system_id, component_id, last_msg);
+    mavlink_test_kcmvp_encrypted_global_position(system_id, component_id, last_msg);
+    mavlink_test_kcmvp_encrypted_gps_raw(system_id, component_id, last_msg);
+    mavlink_test_kcmvp_cmd_ack(system_id, component_id, last_msg);
     mavlink_test_efi_status(system_id, component_id, last_msg);
     mavlink_test_estimator_status(system_id, component_id, last_msg);
     mavlink_test_wind_cov(system_id, component_id, last_msg);
